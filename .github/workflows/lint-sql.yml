@@ -1,4 +1,4 @@
-name: SQL Linting Test Action
+name: HQIU SQL Linting Action
 
 on:
   workflow_call:
