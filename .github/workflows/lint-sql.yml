@@ -41,7 +41,7 @@ jobs:
           )"
       - name: Get SQL coding style config
         run: |
-          curl https://raw.githubusercontent.com/AUS-DOH-Safety-and-Quality/HQIU-Coding-Styles/shared-workflow-testing/SQL/.sqlfluff -o .sqlfluff
+          curl https://raw.githubusercontent.com/AUS-DOH-Safety-and-Quality/HQIU-Coding-Styles/main/SQL/.sqlfluff -o .sqlfluff
       - name: Lint and annotate changed SQL files
         id: sqlfluff_json
         if: steps.get_files_to_lint.outputs.lintees != ''
