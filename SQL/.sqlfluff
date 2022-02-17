@@ -12,6 +12,7 @@ exclude_rules = L022, L031, L045
 tab_space_size = 2
 indent_unit = space
 comma_style = trailing
+max_line_length = 100
 
 [sqlfluff:rules:L014]
 extended_capitalisation_policy = lower
