@@ -17,9 +17,9 @@ jobs:
         run: "pip install sqlfluff"
       - name: Get changed files
         id: get_file_changes
-        uses: trilom/file-changes-action@v1.2.4
+        uses: tj-actions/changed-files@v17.2
         with:
-          output: ' '
+          separator: ","
 
       - name: Get changed SQL files to lint
         id: get_files_to_lint
@@ -30,13 +30,10 @@ jobs:
           # Issue where grep regular expressions don't work as expected on the
           # Github Actions shell, check ALL
           echo \
-          $(echo ${{ steps.get_file_changes.outputs.files_modified }} |
-          tr -s ' ' '\n' |
-          grep -E '..*[.]sql$' |
-          tr -s '\n' ' ') \
-          $(echo ${{ steps.get_file_changes.outputs.files_added }} |
-          tr -s ' ' '\n' |
-          grep -E '..*[.]sql$' |
+          $(echo ${{ steps.get_file_changes.outputs.all_changed_files }} |
+          sed 's/,/\",\"/g' | sed 's/^/\"/' | sed 's/$/\"/' |
+          tr -s ',' '\n' |
+          grep -E '..*[.]sql\"$' |
           tr -s '\n' ' ')
           )"
       - name: Get SQL coding style config
