@@ -33,7 +33,7 @@ jobs:
           # Get all modified files
           $(echo "${{ steps.get_file_changes.outputs.all_changed_files }}" |
           # Add quotations around each filepath
-          sed 's/,/\",\"/g' | sed 's/^/\"/' | sed 's/$/\"/'
+          sed 's/,/\",\"/g' | sed 's/^/\"/' | sed 's/$/\"/' |
           # Split comma-separated filepaths into separate lines
           tr -s ',' '\n' |
           # Keep only the files with a .sql extension
