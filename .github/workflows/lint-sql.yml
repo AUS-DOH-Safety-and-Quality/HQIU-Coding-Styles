@@ -30,15 +30,10 @@ jobs:
           # Issue where grep regular expressions don't work as expected on the
           # Github Actions shell, check ALL
           echo \
-          # Get all modified files
-          $(echo "${{ steps.get_file_changes.outputs.all_changed_files }}" |
-          # Add quotations around each filepath
+          $(echo ${{ steps.get_file_changes.outputs.all_changed_files }} |
           sed 's/,/\",\"/g' | sed 's/^/\"/' | sed 's/$/\"/' |
-          # Split comma-separated filepaths into separate lines
           tr -s ',' '\n' |
-          # Keep only the files with a .sql extension
           grep -E '..*[.]sql\"$' |
-          # Join lines, but now separated by a space
           tr -s '\n' ' ')
           )"
       - name: Get SQL coding style config
