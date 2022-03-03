@@ -6,6 +6,7 @@ on:
 jobs:
   lint-r:
     runs-on: ubuntu-latest
+    container: dohwahqiu/lint:r
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
