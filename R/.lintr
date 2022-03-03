@@ -1,1 +1,2 @@
+error_on_lint: TRUE
 linters: with_defaults()
