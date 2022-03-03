@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  lint-models:
+  lint-r:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
