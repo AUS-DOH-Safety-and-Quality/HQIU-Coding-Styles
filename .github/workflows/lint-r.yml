@@ -24,5 +24,9 @@ jobs:
           curl https://raw.githubusercontent.com/AUS-DOH-Safety-and-Quality/HQIU-Coding-Styles/r-base-config/R/.lintr -o .lintr
 
       - name: Lint root directory
-        run: lintr::lint_dir()
+        run: |
+          lints <- lintr::lint_dir()
+          if (length(lints) > 0) {
+            stop("lints detected")
+          }
         shell: Rscript {0}
