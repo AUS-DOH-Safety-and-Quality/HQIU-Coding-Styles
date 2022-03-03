@@ -27,6 +27,7 @@ jobs:
         run: |
           lints <- lintr::lint_dir()
           if (length(lints) > 0) {
+            lints
             stop("lints detected")
           }
         shell: Rscript {0}
