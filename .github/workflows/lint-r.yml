@@ -1,0 +1,21 @@
+name: HQIU R Linting Action
+
+on:
+  workflow_call:
+
+jobs:
+  lint-r:
+    runs-on: ubuntu-latest
+    container: dohwahqiu/lint:r
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get R coding style config
+        run: |
+          curl https://raw.githubusercontent.com/AUS-DOH-Safety-and-Quality/HQIU-Coding-Styles/main/R/.lintr -o .lintr
+
+      - name: Lint root directory
+        run: lintr::lint_dir()
+        shell: Rscript {0}
