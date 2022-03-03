@@ -6,6 +6,3 @@ RUN python3 -m pip install wheel
 
 RUN python3 -m pip install sqlfluff
 
-RUN addgroup -S user && adduser -S hqiu -G user
-
-USER hqiu

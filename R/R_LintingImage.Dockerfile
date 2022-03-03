@@ -7,6 +7,3 @@ RUN apk add bash build-base R R-dev R-doc libxml2-dev curl-dev \
 
 RUN Rscript -e "install.packages('lintr', repos = 'https://cloud.r-project.org/')"
 
-RUN addgroup -S user && adduser -S hqiu -G user
-
-USER hqiu
