@@ -1,0 +1,19 @@
+[sqlfluff]
+# Excluding the following rules:
+#   - L022: Blank line expected after CTE declaration
+#       - Requires a blank line followed by comma on its own line for multiple declarations
+#   - L031: Avoid table aliases in from clauses and join conditions
+#       - Leads to unnecessarily verbose syntax
+#   - L045: Defines a CTE but does not use it
+#       - Can have false positives with large gap between CTE declaration and use
+exclude_rules = L022, L031, L045
+
+[sqlfluff:rules]
+tab_space_size = 2
+indent_unit = space
+comma_style = trailing
+max_line_length = 100
+
+[sqlfluff:rules:L014]
+extended_capitalisation_policy = lower
+unquoted_identifiers_policy = column_aliases
