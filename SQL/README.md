@@ -1,18 +1,14 @@
 # HQIU SQL Coding Style
 
-This folder contains the SQLFluff linter configuration for HQIU SQL coding style.
-
-We use the following coding conventions for our SQL code:
+The following document provides an overview of HQIU's coding style for SQL, in particular Snowflake SQL. The examples are based in Snowflake, however the principles documented below can be applied across other versions of SQL.
 
 # Purpose
 
-Maintaining reproducibility and transparency is a core value of Kickstarter's Data team, and a SQL style guide can help us achieve that goal. Additionally, adhering to the basic rules in this style guide will improve our ability to share, maintain, and extend our research when working with SQL.
+Maintaining reproducibility and transparency is a core value the Healthcare Quality Intelligence team, and a SQL style guide can help us achieve that goal. Additionally, adhering to the basic rules in this style guide will improve our ability to share, maintain, and extend our analytics when working with SQL.
 
-This document is written as a manual for anyone working on the Data team, but also as a guide for anyone at the company who would like to write clean and clear code that is meant to be shared.
+This document is written as a manual for anyone working in the HQIU team, but also as a guide for anyone who would like to write clean and clear code that is meant to be shared.
 
-The individual tips in this guide are based on a composite of knowledge we've gleaned from experience and our roles at previous jobs.
-
-**NOTE**: This style guide is written for use with [AWS Redshift](https://aws.amazon.com/redshift/)/[Postgres 8.0.2](http://www.postgresql.org/docs/8.0/static/release-8-0-2.html), but much of it can be applied to any SQL database.
+**NOTE**: This style guide is written for use with [Snowflake SQL](https://docs.snowflake.com/en/sql-reference-commands), but much of it can be applied to any SQL database.
 
 # Principles
 
@@ -25,29 +21,42 @@ The individual tips in this guide are based on a composite of knowledge we've gl
 
 ## General stuff
 
-* No tabs. 2 spaces per indent.
+* Snowflake is case-insensitive so always capitalise functions and variables for consistency.
+* Check code into github early and often.
+* Tabs are defaulted to 2 spaces per indent.
+  * When using VSCode for building your queries, set the following options in the settings (`Ctrl + ,`) to assist with indentation:
+    * "editor.tabSize": 4
+    * "editor.insertSpaces": true
+    * "editor.detectIndentation": false
 * No trailing whitespace.
 * Always capitalize SQL keywords (e.g., `SELECT` or `AS`)
-* Variable names should be underscore separated:
+* Variable names should be underscore separated and capitalised ([screaming snake case](https://www.pluralsight.com/blog/software-development/programming-naming-conventions-explained#screaming-snake-case)):
 
   __GOOD__:
-  `SELECT COUNT(*) AS backers_count`
+  `SELECT COUNT(*) AS EVENT_COUNT`
 
   __BAD__:
-  `SELECT COUNT(*) AS backersCount`
+  `SELECT COUNT(*) AS eventCount`
 
 * Comments should go near the top of your query, or at least near the closest `SELECT`
-* Try to only comment on things that aren't obvious about the query (e.g., why a particular ID is hardcoded, etc.)
+* Try to only comment on things that aren't obvious about the query (e.g., why a particular ID is hardcoded, etc.), that explains the reasoning behind your code
 * Don't use single letter variable names be as descriptive as possible given the context:
 
   __GOOD__:
-  `SELECT ksr.backings AS backings_with_creators`
+  `SELECT MORB_EP.SEPARATION_DATE AS MORB_SEPARATION_DATE`
 
   __BAD__:
-  `SELECT ksr.backings AS b`
+  `SELECT MORB_EP.SEPARATION_DATE AS S`
+* Don't use single letter table names, also be as descriptive as possible given the context:
 
-* Use [Common Table Expressions](http://www.postgresql.org/docs/8.4/static/queries-with.html) (CTEs) early and often, and name them well.
-* `HAVING` isn't supported in Redshift, so use CTEs instead. If you don't know what this means, ask a friendly Data Team member.
+  __GOOD__:
+  `FROM MORBIDITY_EPISODE AS MORB_EP`
+
+  __BAD__:
+  `FROM MORBIDITY_EPISODE AS TB1`
+
+
+* Use [Common Table Expressions](https://docs.snowflake.com/en/user-guide/queries-cte) (CTEs) early and often, and name them well.
 
 ## `SELECT`
 
@@ -55,10 +64,10 @@ Align all columns to the first column on their own line:
 
 ```sql
 SELECT
-  projects.name,
-  users.email,
-  projects.country,
-  COUNT(backings.id) AS backings_count
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH,
+  MORB_ICD.ICD_CODE,
+  COUNT(MORB_EP.EVENT_ID) AS EVENT_COUNT
 FROM ...
 ```
 
@@ -66,7 +75,7 @@ FROM ...
 
 ```sql
 SELECT
-  name,
+  UMRN,
   ...
 ```
 
@@ -74,19 +83,30 @@ Always rename aggregates and function-wrapped columns:
 
 ```sql
 SELECT
-  name,
-  SUM(amount) AS sum_amount
+  UMRN,
+  SUM(LENGTH_OF_STAY_DAYS) AS SUM_LOS
 FROM ...
+```
+
+Always select with table aliases if you have joins:
+```sql
+SELECT
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH,
+  SUM(MORB_EP.LENGTH_OF_STAY_DAYS) AS SUM_LOS
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+INNER JOIN HMDC.CLIENT AS CLIENT ON ...
 ```
 
 Always rename all columns when selecting with table aliases:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.backings AS backings
-INNER JOIN ksr.projects AS projects ON ...
+  MORB_EP.UMRN AS UMRN,
+  CLIENT.DATE_OF_BIRTH AS DATE_OF_BIRTH,
+  SUM(MORB_EP.LENGTH_OF_STAY_DAYS) AS SUM_LOS
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+INNER JOIN HMDC.CLIENT AS CLIENT ON ...
 ```
 
 Always use `AS` to rename columns:
@@ -95,8 +115,8 @@ __GOOD__:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
+  MORB_EP.UMRN AS UMRN,
+  SUM(MORB_EP.LENGTH_OF_STAY_DAYS) AS SUM_LOS
 ...
 ```
 
@@ -104,18 +124,21 @@ __BAD__:
 
 ```sql
 SELECT
-  projects.name project_name,
-  COUNT(backings.id) backings_count
+  MORB_EP.UMRN UMRN,
+  SUM(MORB_EP.LENGTH_OF_STAY_DAYS) SUM_LOS
 ...
 ```
 
-Long Window functions should be split across multiple lines: one for the `PARTITION`, `ORDER` and frame clauses, aligned to the `PARTITION` keyword. Partition keys should be one-per-line, aligned to the first, with aligned commas. Order (`ASC`, `DESC`) should always be explicit. All window functions should be aliased.
+Long [Window functions](https://docs.snowflake.com/en/user-guide/functions-window-using) should be split across multiple lines: one for the `PARTITION`, `ORDER` and frame clauses, aligned to the `PARTITION` keyword. Multiple partition keys should be one-per-line, aligned to the first, with aligned commas. Order (`ASC`, `DESC`) should always be explicit. All window functions should be aliased.
 
 ```sql
-SUM(1) OVER (PARTITION BY category_id,
-                          year
-             ORDER BY pledged DESC
-             ROWS UNBOUNDED PRECEDING) AS category_year
+ROW_NUM() OVER (
+  PARTITION BY 
+    UMRN,
+    SEPARATION_YEAR
+  ORDER BY SEPARATION_DATE DESC
+  ROWS UNBOUNDED PRECEDING
+) AS ORDERED_EVENTS_BY_UMRN_YEAR
 ```
 
 ## `FROM`
@@ -126,10 +149,12 @@ __GOOD__:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.projects AS projects
-INNER JOIN ksr.backings AS backings ON backings.project_id = projects.id
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH,
+  COUNT(MORB_EP.EVENT_ID) AS EVENT_COUNT
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+INNER JOIN HMDC.CLIENT AS CLI 
+  ON MORB_EP.UMRN = CLI.UMRN
 ...
 ```
 
@@ -137,15 +162,37 @@ __BAD__:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.projects AS projects, ksr.backings AS backings
-WHERE
-  backings.project_id = projects.id
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH,
+  COUNT(MORB_EP.EVENT_ID) AS EVENT_COUNT
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP, HMDC.CLIENT AS CLI 
+WHERE 
+  MORB_EP.UMRN = CLI.UMRN
 ...
 ```
 
+Always provide aliases for your tables and use `AS` to rename tables:
+
+__GOOD__:
+
+```sql
+SELECT
+  MORB_EP.UMRN AS UMRN
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+...
+```
+
+__BAD__:
+
+```sql
+SELECT
+  MORB_EP.UMRN UMRN
+FROM HMDC.MORBIDITY_EPISODE MORB_EP
+...
+```
 ## `JOIN`
+[From Snowflake](https://docs.snowflake.com/en/user-guide/querying-joins)
+> A join combines rows from two tables to create a new combined row that can be used in the query.
 
 Explicitly use `INNER JOIN` not just `JOIN`, making multiple lines of `INNER JOIN`s easier to scan:
 
@@ -153,12 +200,14 @@ __GOOD__:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.projects AS projects
-INNER JOIN ksr.backings AS backings ON ...
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+INNER JOIN HMDC.CLIENT AS CLI 
+  ON ...
 INNER JOIN ...
-LEFT JOIN ksr.backer_rewards AS backer_rewards ON ...
+LEFT JOIN HMDC.MORBIDITY_ICD AS MORB_ICD 
+  ON ...
 LEFT JOIN ...
 ```
 
@@ -166,34 +215,39 @@ __BAD__:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.projects AS projects
-JOIN ksr.backings AS backings ON ...
-LEFT JOIN ksr.backer_rewards AS backer_rewards ON ...
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+JOIN HMDC.CLIENT AS CLI 
+  ON ...
+JOIN ...
+LEFT JOIN HMDC.MORBIDITY_ICD AS MORB_ICD 
+  ON ...
 LEFT JOIN ...
 ```
 
-Additional filters in the `INNER JOIN` go on new indented lines:
+The `ON` keyword and condition goes in the `INNER JOIN` go on a new indented line:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.projects AS projects
-INNER JOIN ksr.backings AS backings ON projects.id = backings.project_id
-  AND backings.project_country != 'US'
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+INNER JOIN HMDC.CLIENT AS CLI 
+  ON MORB_EP.UMRN = CLI.UMRN
 ...
 ```
 
-The `ON` keyword and condition goes on the `INNER JOIN` line:
+Additional filters in the `INNER JOIN` go on a new double indented line, beginning with the `AND` and `OR` SQL operator:
 
 ```sql
 SELECT
-  projects.name AS project_name,
-  COUNT(backings.id) AS backings_count
-FROM ksr.projects AS projects
-INNER JOIN ksr.backings AS backings ON projects.id = backings.project_id
+  MORB_EP.UMRN,
+  CLIENT.DATE_OF_BIRTH
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+INNER JOIN HMDC.CLIENT AS CLI 
+  ON MORB_EP.UMRN = CLI.UMRN
+    AND MORB_EP.DATE_OF_BIRTH = CLI.DATE_OF_BIRTH
 ...
 ```
 
@@ -202,20 +256,27 @@ Begin with `INNER JOIN`s and then list `LEFT JOIN`s, order them semantically, an
 __GOOD__:
 
 ```sql
-INNER JOIN ksr.backings AS backings ON ...
-INNER JOIN ksr.users AS users ON ...
-INNER JOIN ksr.locations AS locations ON ...
-LEFT JOIN ksr.backer_rewards AS backer_rewards ON ...
+INNER JOIN HMDC.MORBIDITY_ICD AS MORB_ICD 
+  ON ...
+INNER JOIN HMDC.ADMISSION_STATUS AS ADM_STAT 
+  ON ...
+INNER JOIN HMDC.MODE_OF_SEPARATION AS MODE_SEP 
+  ON ...
+LEFT JOIN HMDC.CLIENT AS CLI 
+  ON ...
 LEFT JOIN ...
 ```
 
 __BAD__:
 
 ```sql
-LEFT JOIN ksr.backer_rewards AS backer_rewards ON backings
-INNER JOIN ksr.users AS users ON ...
+INNER JOIN HMDC.MORBIDITY_ICD AS MORB_ICD 
+  ON ...
+LEFT JOIN HMDC.CLIENT AS CLI 
+  ON ...
+INNER JOIN HMDC.ADMISSION_STATUS AS ADM_STAT 
+  ON ...
 LEFT JOIN ...
-INNER JOIN ksr.locations AS locations ON ...
 ```
 
 ## `WHERE`
@@ -224,39 +285,74 @@ Multiple `WHERE` clauses should go on different lines and begin with the SQL ope
 
 ```sql
 SELECT
-  name,
-  goal
-FROM ksr.projects AS projects
+  UMRN,
+  SEPARATION_DATE
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
 WHERE
-  country = 'US'
-  AND deadline >= '2015-01-01'
+  ESTABLISHMENT_CODE = 101
+  AND SEPARATION_DATE >= '2020-01-01'
 ...
 ```
 
-## `CASE`
+## `GROUP BY`
 
-`CASE` statements aren't always easy to format but try to align `WHEN`, `THEN`, and `ELSE` together inside `CASE` and `END`:
+Align all columns to the first column on their own line:
 
 ```sql
-CASE WHEN category = 'Art'
-     THEN backer_id
-     ELSE NULL
+GROUP BY
+  MORB_EP.UMRN,
+  MORB_ICD.ICD_CODE
+```
+
+`GROUP BY` goes on its own line:
+
+```sql
+SELECT
+  UMRN,
+  ...
+```
+
+Remember that in Snowflake you can utilise named variables from your `SELECT` statement in `GROUP BY`:
+
+```sql
+SELECT
+  UMRN,
+  LAST_DAY(SEPARATION_YEAR, 'month') AS SEPARATION_MONTH,
+  COUNT(EVENT_ID) AS EVENT_COUNT
+FROM HMDC.MORBIDITY_EPISODE AS MORB_EP
+GROUP BY
+  UMRN,
+  SEPARATION_MONTH
+```
+
+## `ORDER BY`
+
+Follow the same conventions as the `GROUP BY` section.
+
+## `CASE`
+
+`CASE` statements aren't always easy to format but try to align each `WHEN` and `THEN` on a new indented row, and the final `ELSE` on a new indented row inside `CASE` and `END`:
+
+```sql
+CASE 
+  WHEN ESTABLISHMENT_CODE = 101 THEN 'A'
+  WHEN ESTABLISHMENT_CODE = 102 THEN 'B'
+  ELSE NULL
 END
 ```
 
 ## Common Table Expressions (CTEs)
 
-[From AWS](http://docs.aws.amazon.com/redshift/latest/dg/r_WITH_clause.html):
+[From Snowflake](https://docs.snowflake.com/en/user-guide/queries-cte):
 
->`WITH` clause subqueries are an efficient way of defining tables that can be used throughout the execution of a single query. In all cases, the same results can be achieved by using subqueries in the main body of the `SELECT` statement, but `WITH` clause subqueries may be simpler to write and read.
+> A CTE (common table expression) is a named subquery defined in a `WITH` clause. You can think of the CTE as a temporary view for use in the statement that defines the CTE. The CTE defines the temporary view’s name, an optional list of column names, and a query expression (i.e. a `SELECT` statement). The result of the query expression is effectively a table. Each column of that table corresponds to a column in the (optional) list of column names.
 
 The body of a CTE must be one indent further than the `WITH` keyword. Open them at the end of a line and close them on a new line:
 
 ```sql
-WITH backings_per_category AS (
+WITH EVENTS_PER_UMRN AS (
   SELECT
-    category_id,
-    deadline,
+    UMRN,
     ...
 )
 ```
@@ -264,60 +360,18 @@ WITH backings_per_category AS (
 Multiple CTEs should be formatted accordingly:
 
 ```sql
-WITH backings_per_category AS (
+WITH EVENTS_PER_UMRN AS (
   SELECT
     ...
-), backers AS (
+), 
+EVENTS AS (
   SELECT
     ...
-), backers_and_creators AS (
+), 
+UMRN AS (
   ...
 )
-SELECT * FROM backers;
-```
-
-If possible, `JOIN` CTEs inside subsequent CTEs, not in the main clause:
-
-__GOOD__:
-
-```sql
-WITH backings_per_category AS (
-  SELECT
-    ...
-), backers AS (
-  SELECT
-    backings_per_category.backer_id,
-    COUNT(backings_per_category.id) AS projects_backed_per_category
-  INNER JOIN ksr.users AS users ON users.id = backings_per_category.backer_id
-  GROUP BY backings_per_category.backer_id
-), backers_and_creators AS (
-  ...
-)
-SELECT * FROM backers_and_creators;
-```
-
-__BAD__:
-
-```sql
-WITH backings_per_category AS (
-  SELECT
-    ...
-), backers AS (
-  SELECT
-    backer_id,
-    COUNT(backings_per_category.id) AS projects_backed_per_category
-), backers_and_creators AS (
-  ...
-)
-SELECT * FROM backers_and_creators
-INNER JOIN backers ON backers_and_creators ON backers.backer_id = backers_and_creators.backer_id
+SELECT * FROM UMRN
 ```
 
 Always use CTEs over inlined subqueries.
-
-## Tips
-
-* [Sublime](http://www.sublimetext.com/3) is your friend. Configure it to use soft tabs (e.g. 2 spaces), and [trim trailing whitespace](http://nategood.com/sublime-text-strip-whitespace-save)
-* Helpful Sublime packages include [Githubinator](https://github.com/ehamiter/GitHubinator), [SendText](https://github.com/wch/SendText), and [Package Control](https://packagecontrol.io/installation).
-* Check code into github early and often.
-* Always provide a Githubinator permalink in Trello cards where any code is used.
