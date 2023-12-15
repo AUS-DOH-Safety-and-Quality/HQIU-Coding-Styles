@@ -375,3 +375,20 @@ SELECT * FROM UMRN
 ```
 
 Always use CTEs over inlined subqueries.
+
+__BAD__:
+
+```sql
+SELECT *
+FROM (
+  SELECT *
+  FROM (
+    SELECT *
+    FROM ...
+  )
+)
+LEFT JOIN (
+  SELECT *
+  FROM ...
+)
+```
