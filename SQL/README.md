@@ -25,7 +25,7 @@ This document is written as a manual for anyone working in the HQIU team, but al
 * Check code into github early and often.
 * Tabs are defaulted to 2 spaces per indent.
   * When using VSCode for building your queries, set the following options in the settings (`Ctrl + ,`) to assist with indentation:
-    * "editor.tabSize": 4
+    * "editor.tabSize": 2
     * "editor.insertSpaces": true
     * "editor.detectIndentation": false
 * No trailing whitespace.
