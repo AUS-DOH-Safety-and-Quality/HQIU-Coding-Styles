@@ -307,7 +307,7 @@ GROUP BY
 `GROUP BY` goes on its own line:
 
 ```sql
-SELECT
+GROUP BY
   UMRN,
   ...
 ```
@@ -327,7 +327,15 @@ GROUP BY
 
 ## `ORDER BY`
 
-Follow the same conventions as the `GROUP BY` section.
+Follow the same conventions as the `GROUP BY` section for intending and named variables.
+
+Be explicit in the direction of ordering:
+
+```sql
+ORDER BY
+  UMRN ASC,
+  SEPARATION_MONTH DESC
+```
 
 ## `CASE`
 
