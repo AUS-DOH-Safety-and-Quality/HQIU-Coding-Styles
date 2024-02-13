@@ -23,12 +23,12 @@ HQIU follows the conventions outlined in [the tidyverse style guide](https://sty
 
 On top of the tidyverse style guide, there are additional rules put in place for R coding within HQIU. These are outlined below.
 
-## General stuff
+## General Practices
 
 * Check code into Github early and often.
 * Under Code Options, enable "Insert spaces for Tab" with a Tab width of 2
 * No trailing whitespace
-* Try to only comment on things that aren't obvious about the scrtip (e.g., function is used, etc.), that explains the reasoning behind your code
+* Try to only comment on things that aren't obvious about the script (e.g., function is used, etc.), that explains the reasoning behind your code
 
 ## R Project Files
 
