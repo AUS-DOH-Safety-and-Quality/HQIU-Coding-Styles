@@ -12,6 +12,8 @@ Maintaining reproducibility and transparency is a core value the Healthcare Qual
 
 This document is written as a manual for anyone working in the HQIU team, but also as a guide for anyone who would like to write clean and clear code that is meant to be shared.
 
+We have adopted the styles and guide from the tidyverse style guide. https://style.tidyverse.org/syntax.html
+
 # Principles
 
 * We take a disciplined and practical approach to writing code.
