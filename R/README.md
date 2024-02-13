@@ -2,6 +2,23 @@
 
 This folder contains the lintr linter configuration for HQIU R coding style.
 
+# HQIU R  Coding Style
+
+The following document provides an overview of HQIU's coding style for R. 
+
+# Purpose
+
+Maintaining reproducibility and transparency is a core value the Healthcare Quality Intelligence team, and a R style guide can help us achieve that goal. Additionally, adhering to the basic rules in this style guide will improve our ability to share, maintain, and extend our analytics when working with R.
+
+This document is written as a manual for anyone working in the HQIU team, but also as a guide for anyone who would like to write clean and clear code that is meant to be shared.
+
+# Principles
+
+* We take a disciplined and practical approach to writing code.
+* We regularly check-in code to Github
+* We believe consistency in style is very important.
+* We demonstrate intent explicitly in code, via clear structure and comments where needed.
+
 We use the following coding conventions for our R code:
 
 1. **Variable and Function Names**:
