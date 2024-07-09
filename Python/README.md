@@ -17,3 +17,4 @@ In line with the HQIU R style guide.
 * We believe consistency in style is very important.
 * We demonstrate intent explicitly in code, via clear structure and comments where needed.
 
+## General Practices
