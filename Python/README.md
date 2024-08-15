@@ -23,8 +23,18 @@ The basis of the style guide is a combination of principles from PEP 8 and the t
 
 ## General Practices
 
-At the beginning of the Python script, you should document the name of the scipt, purpose of the script, and the developers involved. 
+At the start / top of the Python script, you should document the name of the scipt, purpose of the script, and the developers involved. 
 
+```python
+
+##########################################
+# Name: Cleaning large dataset
+# Purpose: This script cleans a very large dataset before it is analysed
+# Developers:
+#   Jane Doe
+#   John Doe
+##########################################
+```
 
 
 ### Naming 
@@ -144,9 +154,3 @@ Here are some general usage guidelines and best practices when using jupyter not
 - importing packages and modules should be done at the begining of the notebook only. 
 - Constants should also be defined only at the beginning of the notebook.
 - Code from notebooks should be converted into modules as much as possible. This makes the notebook more reusable, and allows the functions or classes in the modules to be used elsewhere. 
-
-## Markdown
-
-You can refer to the following link for guidance around the use of markdown.
-
-https://markdown.land/markdown-code-block
