@@ -19,11 +19,29 @@ In accordance with the HQIU R style guide.
 
 ## Rules
 
-The basis of the style guide is a combination of principles from PEP 8 and the tidyverse style guide, which is a document that provides the guidelines and best practices on writing python code. Using PEP 8 helps to improve the readability of Python Code.
+The basis of the style guide is a combination of principles from PEP 8 and the tidyverse style guide, which is a document that provides the guidelines and best practices on writing python code. 
+
+To aid with maintaining a consistent style, it is recommended to use both a formatter and a linter. 
+
+- Black (https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html). The Black formatter changes your code automatically to comply with the Black Code style. The style can be viewed as a strict subset of PEP 8. The Black formatter is installed with Anaconda, and can be used from the command line/prompt.
+
+```bash
+
+black example_utils.py
+
+```
+
+- Pylint (https://docs.pylint.org/intro.html#what-is-pylint). Pylint is a useful tool to help check for errors in Python code. Pylint displays messages after analysing your code. Pylint is installed with Anaconda, and can be used from the command line/prompt as shown below. The Pylint linter can also be used as a VS Code extension (https://code.visualstudio.com/docs/python/linting).
+
+```bash 
+
+pylint example_utils.py
+
+```
 
 ## General Practices
 
-At the start / top of the Python script, you should document the name of the scipt, purpose of the script, and the developers involved. 
+At the start / top of the Python script, you should document the name of the scipt, purpose of the script, and the developers involved.
 
 ```python
 
@@ -151,6 +169,10 @@ Here are some general usage guidelines and best practices when using jupyter not
 
 - Give the notebook a header. Limit the scope of the notebook to a particular objective so that it does not becoming overwhelming. 
 - Use markdown throughout the notebook. This includes using headings and subheadings where appropriate. Remember that you are documenting this for those that you work for both yourself in the future, and those that you work with. 
-- importing packages and modules should be done at the begining of the notebook only. 
+- Importing packages and modules should be done at the begining of the notebook only. 
 - Constants should also be defined only at the beginning of the notebook.
 - Code from notebooks should be converted into modules as much as possible. This makes the notebook more reusable, and allows the functions or classes in the modules to be used elsewhere. 
+
+### Committing changes to Github
+
+When committing notebooks to Github, it is critical that output is cleared beforehand. For this reason, it is preferable to use Databricks and push files to Github from there, as a python file is created rather than a python notebook file.
