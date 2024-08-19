@@ -139,7 +139,7 @@ def print_name(name,age):
 ### General programming principles
 
 - Keep it simple
-- Dont repeat yourself. Pieces of code should be implemented in just one place in the souce code. Tasks that are repeated should be implemented as functions
+- Dont repeat yourself. Pieces of code should be implemented in just one place in the source code. Tasks that are repeated should be implemented as functions
 - You are not going to need it. Do not implement something until it is necessary. 
 - For more complicated applications or pieces of software, separation of concerns principles should be implemented. Code should be as independent as possible, making it easier to maintain, update, and reuse. 
 
