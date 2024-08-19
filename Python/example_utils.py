@@ -2,6 +2,7 @@
 Module that provides example utility functions
 """
 
+
 def calculate_average(numbers):
     """
     Prints an individuals name and age
@@ -16,4 +17,4 @@ def calculate_average(numbers):
     number_list_sum = 0
     for number in numbers:
         number_list_sum = number_list_sum + number
-    return(number_list_sum / len(numbers))
+    return number_list_sum / len(numbers)
