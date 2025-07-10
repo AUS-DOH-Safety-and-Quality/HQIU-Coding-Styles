@@ -92,4 +92,9 @@ We use the following coding conventions for our R code:
    - Include *why* you are are coding, i.e. if its used in text later, or if you are calculating a numerator for a value.
    - Large comment chunks are fine to break up your code.
 
+4. **Avoid Index-based Access**
+   - Where possible, avoid index-based access when working with dataframes. (e.g. df[,1] <- NA)
+   - Index-based access may run into issues in the future if the data structure changes.
+   - If possible, refer to the column names to safeguard against this. (e.g. df[, "my_column"] <- NA)
+
 Remember, clear and consistent naming improves code maintainability and collaboration. 
