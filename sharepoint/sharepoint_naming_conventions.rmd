@@ -1,6 +1,6 @@
 ---
 title: "SharePoint Naming Convention Guide"
-author: "Richard Gillett"
+author: "Head of Healthcare Quality Intelligence Unit (HQIU), Patient Safety & Clinical Quality (PSCQ) Directorate"
 date: "`r Sys.Date()`"
 output: html_document
 ---
