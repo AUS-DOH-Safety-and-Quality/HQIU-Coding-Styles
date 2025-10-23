@@ -6,11 +6,11 @@ This document provides an outline of HQIU's coding style in Python.
 
 This Python style guide helps contribute to the goal of the Healthcare Quality Intelligence unit (HQIU) in producing reproducible and transparent code. Adhering to rules outlined in this style guide helps to improve our ability to share, maintain, and develop analytical workflows in cases where Python is used. 
 
-This is designed for those in the HQIU team or those interested in writing Python code that is clear and can be shared and maintained. The HQIU Python coding style guide takes inspiration from the HQIU R coding style guide.
+This is designed for those in the HQIU team or those interested in writing Python code that is clear and can be shared and maintained. The HQIU Python coding style guide takes inspiration from the HQIU Python coding style guide.
 
 ## Principles
 
-In accordance with the HQIU R style guide.
+In accordance with the HQIU Python style guide.
 
 * We take a disciplined and practical approach to writing code.
 * We regularly check-in code to Github
