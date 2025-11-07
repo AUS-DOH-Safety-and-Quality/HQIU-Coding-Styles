@@ -1,10 +1,3 @@
----
-title: "SharePoint Naming Convention Guide"
-author: "Head of Healthcare Quality Intelligence Unit (HQIU), Patient Safety & Clinical Quality (PSCQ) Directorate"
-date: "`r Sys.Date()`"
-output: html_document
----
-
 # Purpose 
 
 This guide outlines the naming conventions used for organising folders and files in SharePoint.
