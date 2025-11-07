@@ -1,0 +1,61 @@
+---
+title: "SharePoint Naming Convention Guide"
+author: "Head of Healthcare Quality Intelligence Unit (HQIU), Patient Safety & Clinical Quality (PSCQ) Directorate"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Purpose
+
+This guide outlines the naming conventions used for organising folders and files in SharePoint. 
+
+It also compares these conventions with SharePoint best practices and provides recommendations for improvement.
+
+# Current Naming Conventions
+
+## File Naming Structure
+
+- **Format**: `YYYY MM [document type] [subject]`
+  - Example: `2025 08 BN Define New Coding Styles`
+- **Document types** 
+  - `BN`: Briefing Note
+- **Document Target - Abbreviations used in file names may indicate who a document is TO:**:
+  - `DG`: Director General
+  - `NCR`: National Cardiac Registry
+- **Attachment Descriptive Titles**:
+  - **Attachments to BNs often describe what the document is in detail, to meet requirements of the Department**
+  - `DG Nomination Letter National Board`
+  - `Board Director Appointment`
+- **Structured Lists**: which may be used in dataflows or other coding products should follow the R style guide, e.g. 
+  - `indicator_list`
+  - `retired_indicator_list`
+  - `hospitals_list`
+
+## Folder Organisation
+
+- Subject-based grouping (e.g., indicators, hospitals, appointments)
+- Status tracking using terms like “Approved” or “Retired” should be avoided, as these duplicate files. By using SharePoint's built in version control, you can reduce the number of duplicate files.
+
+# SharePoint Best Practices
+
+| Best Practice | Description |
+|---------------|-------------|
+| Descriptive Names | Use clear, meaningful names |
+| Avoid Generic Terms | Avoid vague terms like “misc” |
+| Date Format | Use `YYYY MM` for sorting |
+| Consistent Abbreviations | Use standard, documented abbreviations |
+| Avoid Special Characters | Do not use `\ / : * ? " < > |` |
+| Version Control | Enable versioning in document libraries |
+| Folder Numbering | Use two-digit sequences (`01`, `02`, etc.) |
+
+# Recommendations
+
+1. **Use Date Format**: Adopt `YYYY MM` (e.g., `2025 08`) for better chronological sorting, we don't always use days as these are redundant.  You may use them on demand if you are putting up multiple documents on the same topic each month.  Poor you. 
+2. **Standardise Numbering**: Use two-digit sequences (`01`, `02`) instead of single digits.
+3. **Document Abbreviations**: Reuse our existing glossary of abbreviations - don't recreate.
+4. **Enable Version Control**: Ensure versioning is active in SharePoint libraries, typically this is enabled by default.
+6. **Create Templates**: Provide naming templates for common document types.
+
+# Conclusion
+
+Our current naming conventions are largely aligned with the WA Health Style Guide, existing coding standards and SharePoint best practices. With minor adjustments.
