@@ -19,7 +19,7 @@ This guidance sets clear, unit‑wide expectations for how HQIU staff store, man
 - **Do not store HQIU work on personal devices or personal OneDrive.**
 - **GitHub is the single source of truth for all code. Push changes regularly.**
 - **Outputs and datasets must live in SharePoint or WA Health data platforms, not GitHub.**
-- **Maintain GitHub hygiene: delete stale branches, use standard `.gitignore`, avoid sensitive data.**
+- **Maintain GitHub hygiene: delete stale branches, use `.gitignore`, avoid sensitive data.**
 
 ---
 
@@ -60,8 +60,7 @@ Use **WA Health–managed** devices and storage locations only.
 - **Repository hygiene:**  
   - Delete branches once merged into `main`.  
   - Remove stale or abandoned branches (rule of thumb: *if it’s older than mouldy cheese, it should be removed*).  
-  - Use HQIU-standard `.gitignore` files.
-
+  
 - **No sensitive data in GitHub:**  
   - Do not commit personally identifiable information, patient identifiers, secrets, credentials, environment files, or model outputs.
   - Use scrubbers or secrets‑scanners before pushing.
@@ -93,5 +92,6 @@ Use **WA Health–managed** devices and storage locations only.
 
 **After merging to `main`:**
 - Delete the feature branch (local and remote).
+
 
 
