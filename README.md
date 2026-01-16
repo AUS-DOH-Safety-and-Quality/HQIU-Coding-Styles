@@ -7,12 +7,6 @@ Please see each repo for more detailed guides on coding styles for each language
 
 The official Department of Health Style Guide previously specified a Vancouver style, but in 2021 recommended the style preferred by the readership (if publishing in Journals).  For ease, either the APA standard or the Vancouver style (more commonly used in medical journals) are fine.
 
-
-Here is the **Markdown-formatted** guidance, ready to paste into SharePoint, Teams, GitHub, or a policy document.
-
-***
-
-```markdown
 # HQIU Guidance: Storage of Code, Files & Use of GitHub
 **Clinical Excellence Division – Healthcare Quality Intelligence Unit**
 
@@ -99,6 +93,4 @@ Use **WA Health–managed** devices and storage locations only.
 
 **After merging to `main`:**
 - Delete the feature branch (local and remote).
-
-If you want this converted into **PDF**, **Word**, or a **SharePoint page layout**, I can generate that for you too.
 
