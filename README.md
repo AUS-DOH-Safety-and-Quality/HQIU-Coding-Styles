@@ -17,7 +17,7 @@ This guidance sets clear, unit‑wide expectations for how HQIU staff store, man
 
 ## 2. Good Practice Principles (Summary)
 - **Do not store HQIU work on personal devices or personal OneDrive.**
-- **GitHub is the single source of truth for all code. Push changes daily.**
+- **GitHub is the single source of truth for all code. Push changes regularly.**
 - **Outputs and datasets must live in SharePoint or WA Health data platforms, not GitHub.**
 - **Maintain GitHub hygiene: delete stale branches, use standard `.gitignore`, avoid sensitive data.**
 
@@ -47,17 +47,19 @@ Use **WA Health–managed** devices and storage locations only.
 ## 4. GitHub Requirements (WA Health Department HQIU Practice)
 
 - **Single source of truth:**  
-  All code — including work‑in‑progress — must be stored within the HQIU GitHub organisation on **DEV** or **UAT** branches.
+  All code — including work‑in‑progress — must be stored within the HQIU GitHub organisation on branches.
 
-- **Daily push:**  
-  Commit locally during the day, then **push all changes to GitHub by close of business**.
-
-- **Local clones only on managed devices:**  
-  Local copies for development must be on **WA Health–managed laptops only** and synced regularly.
-
+- **Recommended: push frequenc:**  
+  Depending on your project, you may want to vary this appraoch.
+  However, we would recommend regular commits locally during the day, then pushing changes to github at defined milestones.
+  If youre looking for a recommended frequency, at least once a week (depending on the project).
+  
+- **Local files / clones :**  
+  Local copies for development must be on synced regularly.
+  
 - **Repository hygiene:**  
   - Delete branches once merged into `main`.  
-  - Remove stale or abandoned branches (rule of thumb: *if it’s older than mouldy cheese, it’s gone*).  
+  - Remove stale or abandoned branches (rule of thumb: *if it’s older than mouldy cheese, it should be removed*).  
   - Use HQIU-standard `.gitignore` files.
 
 - **No sensitive data in GitHub:**  
@@ -69,11 +71,9 @@ Use **WA Health–managed** devices and storage locations only.
 
 ---
 
-## 5. Exceptions & Escalation
+## 5. Exceptions
 
-- **Temporary exceptions** (e.g., troubleshooting, ) must be agreed in advance with the HQIU Lead and must include a disposal or migration plan.
-- **Testing data** note that some repositories may have dummy, testing data. This data is artificially generated for testing purposes.  
-- **If you identify a file** (e.g., real data in GitHub, unapproved storage, personal device usage), report immediately to your line manager or HQIU Lead.
+- **Testing data** note that some repositories may have dummy, testing data. This data is artificially generated for testing purposes, and may remain.  This type of data should be documented in the readme for the code. 
 
 ---
 
@@ -93,4 +93,5 @@ Use **WA Health–managed** devices and storage locations only.
 
 **After merging to `main`:**
 - Delete the feature branch (local and remote).
+
 
